@@ -1,6 +1,32 @@
+html {
+  overflow: hidden;
+}
+html,
+body,
+#root {
+  min-height: 100vh;
+  height: 100%;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+  margin: 0;
+  position: relative;
+  color: white;
+  background-color: #212124;
+  font-family: Roboto, Helvetica;
+}
+
+::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px grey;
+  background-color: rgb(1, 1, 1);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: white;
+  outline: 1px solid slategrey;
 }
