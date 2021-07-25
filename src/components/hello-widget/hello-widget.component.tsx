@@ -1,6 +1,6 @@
-import React from 'react'
-import './hello-widget.styles.css'
+import React from "react";
+import "./hello-widget.styles.css";
 
-const HelloWidget: React.FC = () => <p>Hello, world!</p>
+const HelloWidget: React.FC = () => <p>Hello, world!</p>;
 
-export default HelloWidget
+export default HelloWidget;
