@@ -10,6 +10,7 @@
     "prettier": "prettier --check .",
     "check-all": "yarn lint && yarn prettier",
     "format": "eslint --fix --quiet src/*.* && prettier --write .",
+    "prepare": "husky install",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish"
@@ -88,6 +89,8 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "fork-ts-checker-webpack-plugin": "^6.0.1",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.1",
     "node-loader": "^2.0.0",
     "prettier": "2.3.2",
     "style-loader": "^3.0.0",
@@ -98,5 +101,12 @@
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --max-warnings=0 --fix",
+      "prettier --write"
+    ],
+    "*.{js,html,css,scss,json,md}": "prettier --write"
   }
 }
