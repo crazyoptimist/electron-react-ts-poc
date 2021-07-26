@@ -1,5 +1,7 @@
 # Electron React Typescript POC
 
+[![CircleCI](https://circleci.com/gh/CrazyOptimist/electron-react-ts-poc/tree/main.svg?style=svg)](https://circleci.com/gh/CrazyOptimist/electron-react-ts-poc/tree/main)
+
 This demonstration is bootstrapped with below command:
 
 ```
