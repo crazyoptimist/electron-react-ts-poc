@@ -1,0 +1,76 @@
+version: 2.1
+
+executors:
+  electron-builder:
+    docker:
+      - image: electronuserland/builder:14
+    working_directory: ~/project
+
+jobs:
+  install-deps:
+    executor: electron-builder
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node_deps-{{ checksum "yarn.lock" }}
+      - run:
+          name: install dependencies
+          command: yarn --frozen-lockfile
+      - save_cache:
+          key: node_deps-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/project/node_modules
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+  lint:
+    executor: electron-builder
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: run lint and prettier
+          command: yarn check-all
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+  build-ubuntu:
+    executor: electron-builder
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: install dpkg and fakeroot
+          command: |
+            apt-get update -y
+            apt-get install -y dpkg fakeroot
+      - run:
+          name: build for linux(deb)
+          command: yarn make
+      - store_artifacts:
+          path: ~/project/out/make
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+workflows:
+  lint-test-package:
+    jobs:
+      - install-deps
+      - lint:
+          requires:
+            - install-deps
+      - build-ubuntu:
+          filters: &filters-build
+            tags:
+              only: /^v[0-9]+(\.[0-9]+).*/
+            branches:
+              ignore: /.*/
+          requires:
+            - lint
