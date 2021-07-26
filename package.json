@@ -1,8 +1,8 @@
 {
   "name": "electron-react-ts-poc",
   "productName": "electron-react-ts-poc",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "1.0.1",
+  "description": "Electron application devops configuration POC",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -15,7 +15,13 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish"
   },
-  "keywords": [],
+  "keywords": [
+    "electron",
+    "react",
+    "typescript",
+    "circleci",
+    "git hooks"
+  ],
   "author": {
     "name": "crazyoptimist",
     "email": "crazyoptimist@mail.com"

@@ -5,6 +5,10 @@ executors:
     docker:
       - image: electronuserland/builder:14
     working_directory: ~/project
+  github-releaser:
+    docker:
+      - image: golang:1.16-alpine
+    working_directory: ~/project
 
 jobs:
   install-deps:
@@ -54,10 +58,18 @@ jobs:
           command: yarn make
       - store_artifacts:
           path: ~/project/out/make
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
+
+  publish-github-release:
+    executor: github-releaser
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: publish release on github
+          command: |
+            go get github.com/tcnksm/ghr
+            VERSION=<< pipeline.git.tag >>
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -delete ${VERSION} ~/project/out/make
 
 workflows:
   lint-test-package:
@@ -78,3 +90,9 @@ workflows:
               ignore: /.*/
           requires:
             - lint
+      - publish-github-release:
+          context: global
+          filters:
+            <<: *filters-build
+          requires:
+            - build-ubuntu
