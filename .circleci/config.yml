@@ -62,13 +62,19 @@ jobs:
 workflows:
   lint-test-package:
     jobs:
-      - install-deps
+      - install-deps:
+          filters: &filters-commit
+            tags:
+              only: /^v[0-9]+(\.[0-9]+).*/
       - lint:
           requires:
             - install-deps
+          filters:
+            <<: *filters-commit
       - build-ubuntu:
           filters: &filters-build
-            tags:
-              only: /^v[0-9]+(\.[0-9]+).*/
+            <<: *filters-commit
+            branches:
+              ignore: /.*/
           requires:
             - lint
