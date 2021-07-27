@@ -1,7 +1,7 @@
 {
   "name": "electron-react-ts-poc",
   "productName": "electron-react-ts-poc",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Electron application devops configuration POC",
   "main": ".webpack/main",
   "scripts": {
